@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Ship To</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header { background-color: blue; color: white; }
+        .header .nav-link { color: white; }
+        .content { background-color: gray; color: black; padding: 20px; }
+        .product-image { width: 100%; height: 150px; object-fit: cover; }
+        
+
+.navbar-brand {color: white !important;
+    font-style: oblique;
+    font-size: 33px;
+    padding: 0px;}
+    </style>
+</head>
+<body>
+<!-- Header -->
+<nav class="navbar navbar-expand-lg header">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Vania</a>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Women</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Men</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Electronics</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Jewellery</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+    <h2 class="fw-bold mb-4">Checkout - Ship To</h2>
+    <div class="row">
+        <!-- Shipping Info Form -->
+        <div class="col-md-8">
+            <form>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="country" class="form-label">Country</label>
+                        <select class="form-select" id="country" required>
+                            <option value="">Select Country</option>
+                            <option value="USA">USA</option>
+                            <option value="Canada">Canada</option>
+                            <option value="UK">UK</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="address1" class="form-label">Street Address</label>
+                        <input type="text" class="form-control" id="address1" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="address2" class="form-label">Street Address 2</label>
+                        <input type="text" class="form-control" id="address2">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="state" class="form-label">State</label>
+                        <select class="form-select" id="state" required>
+                            <option value="">Select State</option>
+                            <option value="California">California</option>
+                            <option value="Texas">Texas</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="zip" class="form-label">Zip Code</label>
+                        <input type="text" class="form-control" id="zip" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Pricing Summary (Right side) -->
+        <div class="col-md-4">
+            <h4>Pricing Summary</h4>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Subtotal</span><span id="subtotal">$100.00</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Coupon</span><span id="coupon">$0.00</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Gift Card</span><span id="giftCard">$0.00</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Estimated Tax</span><span id="estimatedTax">$8.00</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Estimated Shipping</span><span id="estimatedShipping">$5.00</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between fw-bold">
+                    <span>Estimated Total</span><span id="estimatedTotal">$113.00</span>
+                </li>
+            </ul>
+            <button onclick="continueToShippingMethod()" class="btn btn-primary mt-4 w-100">Continue to Shipping Method</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Navigate to Shipping Method Page
+function continueToShippingMethod() {
+    window.location.href = 'checkout_step2_shipping_method.html';
+}
+</script>
+
+</body>
+</html>

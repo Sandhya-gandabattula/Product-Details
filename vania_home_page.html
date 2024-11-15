@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vania - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header { background-color: blue; color: white; }
+        .header .nav-link { color: white; }
+        .content { background-color: gray; color: black; padding: 20px; }
+        .product-image { width: 100%; height: 150px; object-fit: cover; }
+        
+
+.navbar-brand {color: white !important;
+    font-style: oblique;
+    font-size: 33px;
+    padding: 0px;}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg header">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Vania</a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Women</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Men</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Electronics</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Jewellery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content text-center">
+        <h1 class="display-5 fw-bold">Show the Signature Collection</h1>
+        <img src="images/premium_photo-1683147858150-d1f96bae7d8f.jpg/" style="border-radius: 5px;max-height: 700px;" class="img-fluid" alt="Collection Image">
+    </div>
+
+    <!-- Category Page Section -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Filter Section -->
+            <div class="col-md-3">
+                <h5>Filter by Category</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="jewellery" value="jewelery">
+                    <label class="form-check-label" for="jewellery">Jewellery</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="electronics" value="electronics">
+                    <label class="form-check-label" for="electronics">Electronics</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="mensClothing" value="men's clothing">
+                    <label class="form-check-label" for="mensClothing">Men's Clothing</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="womensClothing" value="women's clothing">
+                    <label class="form-check-label" for="womensClothing">Women's Clothing</label>
+                </div>
+
+                <h5 class="mt-4">Sort by Price</h5>
+                <select id="sortPrice" class="form-select">
+                    <option value="asc">Low to High</option>
+                    <option value="desc">High to Low</option>
+                </select>
+
+                <button onclick="applyFilters()" class="btn btn-primary mt-3">Apply Filters</button>
+            </div>
+
+            <!-- Product Display Section -->
+            <div class="col-md-9">
+                <div id="productContainer" class="row"></div>
+                <button id="loadMoreBtn" class="btn btn-outline-primary mt-3" onclick="loadMoreProducts()">Load More</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let products = [];
+        let displayedCount = 0;
+        const loadLimit = 10;
+
+        // Fetch products from Fake Store API
+        async function fetchProducts() {
+            const response = await fetch('https://fakestoreapi.com/products');
+            products = await response.json();
+            applyFilters(); // Initial display with first load limit
+        }
+
+        // Display filtered and sorted products
+        function displayProducts(filteredProducts) {
+            const productContainer = document.getElementById('productContainer');
+            productContainer.innerHTML = ''; // Clear existing products
+            filteredProducts.slice(0, displayedCount).forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'col-md-4 mb-3';
+                productCard.innerHTML = `
+                    <div class="card">
+                        <img src="${product.image}" class="card-img-top product-image" alt="${product.title}">
+                        <div class="card-body">
+                            <h6 class="card-title">${product.title}</h6>
+                            <p class="card-text">$${product.price.toFixed(2)}</p>
+                            <button class="btn btn-primary" onclick="goToProductDetails(${product.id})">View Details</button>
+                        </div>
+                    </div>
+                `;
+                productContainer.appendChild(productCard);
+            });
+            document.getElementById('loadMoreBtn').style.display = 
+                displayedCount >= filteredProducts.length ? 'none' : 'block';
+        }
+
+        // Filter, sort, and lazy load products
+        function applyFilters() {
+            let filteredProducts = products;
+
+            // Get selected categories
+            const categories = [];
+            if (document.getElementById('jewellery').checked) categories.push('jewelery');
+            if (document.getElementById('electronics').checked) categories.push('electronics');
+            if (document.getElementById('mensClothing').checked) categories.push("men's clothing");
+            if (document.getElementById('womensClothing').checked) categories.push("women's clothing");
+
+            if (categories.length > 0) {
+                filteredProducts = products.filter(product => categories.includes(product.category));
+            }
+
+            // Sort products by price
+            const sortDirection = document.getElementById('sortPrice').value;
+            filteredProducts = filteredProducts.sort((a, b) =>
+                sortDirection === 'asc' ? a.price - b.price : b.price - a.price
+            );
+
+            // Update displayed count and render
+            displayedCount = loadLimit;
+            displayProducts(filteredProducts);
+        }
+
+        // Load more products
+        function loadMoreProducts() {
+            displayedCount += loadLimit;
+            applyFilters();
+        }
+
+        // Navigate to Product Details page with selected product ID
+        function goToProductDetails(productId) {
+            localStorage.setItem('selectedProductId', productId);
+            window.location.href = 'product_details_page.html';
+        }
+
+        // Initial fetch
+        fetchProducts();
+    </script>
+</body>
+</html>
